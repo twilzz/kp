@@ -1,0 +1,6 @@
+{
+    "esversion" : 8,
+    "camelcase": true,
+    "node": true,
+    "browser": true
+}

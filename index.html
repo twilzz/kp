@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/main.css"
+    />
+    <script src="/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  </head>
+  <body>
+    <div class="main">
+      <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+      <button id="add2base" style="margin-right: 5px;">Добавить продукт в базу</button>
+      <button id="showbase">Показать базу</button>
+      <button id="startCalc" style="margin-left: 5px">Начать расчет</button>
+      </div>
+      <div class="popup__window">Сюда постятся формы</div>
+      <div class="form">
+        <!-- <form class="add_form">
+          <p style="text-align: center;">Добавть продукт в базу JSON</p>
+          <select name="type">
+            <option value="none" hidden>Выбрать тип</option>
+            <option value="potolok">Потолок</option>
+            <option value="walls">Стены</option>
+            <option value="doors">Двери</option>
+          </select>
+          <input type="text" name="descripton" placeholder="Описание позиции">
+          <input type="number" name="koeff" placeholder="Коэффициент">
+          <input type="text" name="price" placeholder="Стоимость, руб">
+          <input type="submit" value="Добавить">
+        </form> -->
+      </div>
+<div class="exist">
+  <p style="text-align: center;">Шаг 1 - Выбор позиций  для коммерческого предложения</p>
+  <div class="result_grid_top">
+     <div class='result_grid_position'>ID</div>
+     <div class='result_grid_position'>ТИП</div>
+     <div class='result_grid_position'>ОПИСАНИЕ</div>
+     <div class='result_grid_position'>КОЭФФ</div>
+     <div class='result_grid_position'>СЕБ-МОСТЬ</div>
+</div>
+<div class="result_grid_body"></div>
+<div class="button_line"></div>
+   </div>
+  </body>
+</html>

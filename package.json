@@ -1,0 +1,15 @@
+{
+  "name": "kompred",
+  "version": "1.0.0",
+  "description": "app for composing commercials",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "twils",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "json-server": "^0.16.3"
+  }
+}
