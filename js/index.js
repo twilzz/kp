@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let prices = [];
 
   
-  getData();
+  
 
 const buttonAdd = document.querySelector('#add2base'),
       buttonShow = document.querySelector('#showbase'),
@@ -36,18 +36,16 @@ const buttonAdd = document.querySelector('#add2base'),
       });
       buttonShow.addEventListener('click', ()=> {
         generateWindow();
-        if (popupWindow.firstChild) {
-        popupWindow.removeChild(popupWindow.firstChild);
-        }
+        getData();
       });
       buttonStart.addEventListener('click', ()=> {
         generateWindow();
-        if (popupWindow.firstChild) {
-          popupWindow.removeChild(popupWindow.firstChild);
-          }
       });
   function generateWindow() {
     popupWindow.classList.toggle('popup__window_show');
+    while (popupWindow.firstChild) {
+      popupWindow.removeChild(popupWindow.firstChild);
+      }
   }
 
   //ШАГ 1 - СБОР РАСЧЕТНОГО ЛИСТА
@@ -90,7 +88,7 @@ const buttonAdd = document.querySelector('#add2base'),
                         <div class='result_grid_position' style="text-align:left" data-koeff="${koeff}" data-price="${price}">${descripton}</div>
                         <div class='result_grid_position' name="koeff">${koeff}</div>
                         <div class='result_grid_position' name="price">${price}</div>`;
-    resultDiv.append(newRow);
+                        popupWindow.append(newRow);
   }
 
   function filterRows(selector) {
