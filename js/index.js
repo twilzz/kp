@@ -1,28 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   const resultDiv = document.querySelector(".result_grid_body"),
     buttonPlace = document.querySelector(".button_line"),
-    stepText = document.querySelector(".exist p");
+    divExist = document.querySelector('.exist');
   let subButton, buttonReset;
   let prices = [];
 
-  
-  
+  const buttonAdd = document.querySelector("#add2base"),
+    buttonShow = document.querySelector("#showbase"),
+    buttonStart = document.querySelector("#startCalc"),
+    popupWindow = document.querySelector(".popup__window");
 
-const buttonAdd = document.querySelector('#add2base'),
-      buttonShow = document.querySelector('#showbase'),
-      buttonStart = document.querySelector('#startCalc'),
-      popupWindow = document.querySelector('.popup__window');
-
-      buttonAdd.addEventListener('click', ()=> {
-        generateWindow();
-        popupWindow.innerHTML = `<div class="form">
+  buttonAdd.addEventListener("click", () => {
+    generateWindow();
+    popupWindow.innerHTML = `<div class="form">
                                   <form class="add_form">
                                   <p style="text-align: center;">Добавть продукт в базу JSON</p>
                                   <select name="type">
                                     <option value="none" hidden>Выбрать тип</option>
-                                    <option value="potolok">Потолок</option>
-                                    <option value="walls">Стены</option>
-                                    <option value="doors">Двери</option>
+                                    <option value="Потолок">Потолок</option>
+                                    <option value="Стены">Стены</option>
+                                    <option value="Двери">Двери</option>
                                   </select>
                                   <input type="text" name="descripton" placeholder="Описание позиции">
                                   <input type="number" name="koeff" placeholder="Коэффициент">
@@ -30,22 +27,31 @@ const buttonAdd = document.querySelector('#add2base'),
                                   <input type="submit" value="Добавить">
                                 </form>
                               </div>`;
-                  
-        const form = document.querySelector("form");
-        postData(form);
-      });
-      buttonShow.addEventListener('click', ()=> {
-        generateWindow();
-        getData();
-      });
-      buttonStart.addEventListener('click', ()=> {
-        generateWindow();
-      });
+
+    const form = document.querySelector("form");
+    postData(form);
+  });
+  buttonShow.addEventListener("click", () => {
+    generateWindow();
+    let newGridTop = document.createElement("div");
+    newGridTop.classList.add("result_grid_top");
+    newGridTop.innerHTML = `<div class='result_grid_position'>ID</div>
+                          <div class='result_grid_position'>Тип</div>
+                          <div class='result_grid_position'>Описание позиции</div>
+                          <div class='result_grid_position'>Коэфф</div>
+                          <div class='result_grid_position'>СЕБЕСТ ед.</div>
+                          `;
+    popupWindow.append(newGridTop);
+    getData();
+  });
+  buttonStart.addEventListener("click", () => {
+    generateWindow();
+  });
   function generateWindow() {
-    popupWindow.classList.toggle('popup__window_show');
+    popupWindow.classList.toggle("popup__window_show");
     while (popupWindow.firstChild) {
       popupWindow.removeChild(popupWindow.firstChild);
-      }
+    }
   }
 
   //ШАГ 1 - СБОР РАСЧЕТНОГО ЛИСТА
@@ -58,16 +64,16 @@ const buttonAdd = document.querySelector('#add2base'),
     });
   }
 
-  function getData() {
-    stepText.textContent =
-      "Шаг 1 - Выбор позиций  для коммерческого предложения";
-    axios.get("http://localhost:3000/products").then((data) => {
+  async function getData() {
+    await axios.get("http://localhost:3000/products").then((data) => {
       data.data.forEach((item) => {
         renderExists(item);
       });
       subButton = document.createElement("button");
-      subButton.innerText = "Собрать";
-      buttonPlace.append(subButton);
+      subButton.innerText = "Добавить в расчет";
+      subButton.style.width ='150px';
+      subButton.style.marginTop ='5px';
+      popupWindow.append(subButton);
       const rowOfProduct = document.querySelectorAll(".result_grid");
       rowOfProduct.forEach((item, index) =>
         item.addEventListener("click", () => {
@@ -75,7 +81,8 @@ const buttonAdd = document.querySelector('#add2base'),
         })
       );
       subButton.addEventListener("click", () => {
-        filterRows(".result_grid");
+        copyRows(".result_grid");
+        generateWindow();
       });
     });
   }
@@ -84,35 +91,26 @@ const buttonAdd = document.querySelector('#add2base'),
     const newRow = document.createElement("div");
     newRow.classList.add("result_grid");
     newRow.innerHTML = `<div class='result_grid_position'>${id}</div>
-                        <div class='result_grid_position' name="type">${type}</div>
-                        <div class='result_grid_position' style="text-align:left" data-koeff="${koeff}" data-price="${price}">${descripton}</div>
-                        <div class='result_grid_position' name="koeff">${koeff}</div>
+                        <div class='result_grid_position' style="border-left: 1px solid blue;border-right: 1px solid blue;" name="type">${type}</div>
+                        <div class='result_grid_position' style="text-align:left; padding-left:5px" data-koeff="${koeff}" data-price="${price}">${descripton}</div>
+                        <div class='result_grid_position' style="border-left: 1px solid blue;border-right: 1px solid blue;" name="koeff">${koeff}</div>
                         <div class='result_grid_position' name="price">${price}</div>`;
-                        popupWindow.append(newRow);
+    popupWindow.append(newRow);
   }
-
-  function filterRows(selector) {
+ 
+  function copyRows(selector) {
     const rows = document.querySelectorAll(selector);
-    stepText.textContent = "Шаг 1 - Проверка собранного листа";
     rows.forEach((item, index) => {
       if (item.classList.contains("result_grid_clicked")) {
-        item.classList.remove("result_grid_clicked");
+        divExist.append(item);
+        // item.classList.remove("result_grid_clicked");
       } else {
         item.remove();
       }
     });
-    recreateButtons("Следующий  шаг", recreateNewData);
-    buttonReset = document.createElement("button");
-    buttonReset.innerText = "Сбросить лист";
-    buttonPlace.append(buttonReset);
-    buttonReset.addEventListener("click", () => {
-      let rows = document.querySelectorAll(selector);
-      rows.forEach((item) => item.remove());
-      subButton.remove();
-      buttonReset.remove();
-      getData();
-    });
+
   }
+
   //ШАГ 2 - РАБОТА С ОБЪЕМАМИ
   function recreateNewData() {
     const gridTopParent = document.querySelector(".result_grid_top");
@@ -175,11 +173,5 @@ const buttonAdd = document.querySelector('#add2base'),
     spanPrices.forEach((item) => prices.push(+item.textContent));
     console.log(prices.reduce((a, b) => a + b));
   }
-  function recreateButtons(buttonText, func) {
-    subButton.remove();
-    subButton = document.createElement("button");
-    subButton.innerText = buttonText;
-    buttonPlace.append(subButton);
-    subButton.addEventListener("click", func);
-  }
+
 });
