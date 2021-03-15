@@ -11,18 +11,54 @@
       media="screen"
       href="/css/main.css"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="/css/graph.css"
+    />
     <script src="/js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   </head>
   <body>
     <div class="main">
-      <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-      <button id="add2base" style="margin-right: 5px;">Добавить продукт в базу</button>
-      <button id="showbase">Показать базу</button>
-      <button id="startCalc" style="margin-left: 5px">Начать расчет</button>
+      <div class="header">
+        <div class="logo"><img src="./img/logo.png" alt="logo"></div>
+        <div class="phone"><span>(812)</span>449-97-17</div>
+        <div class="contact">
+          <div class="contact_top"><a href="tel:8807005319">(800)700-53-19</a></div>
+          <div class="contact_bottom">отдел продаж</div>
+        </div>
+      </div>
+      <div class="button_container">
+      <button id="startinfo">Ввести данные расчета</button>
+      <button id="showbase" style="margin-left: 5px; margin-right: 5px;">Выбрать поз для расчета</button>
+      <button id="add2base">Добавить продукт в базу</button>
       </div>
       <div class="popup__window">Сюда постятся формы</div>
+      <div class="start_window">
+        <div class="formdiv">
+        <div class="headers">
+          <ul>
+          <li>Номер коммерческого предложения:</li>
+          <li>Наименование объекта:</li>
+          <li>Площадь помещений:</li>
+          <li>Периметр помещений:</li>
+          <li>Высота помещений:</li>
+          </ul></div>
+        <div class="values">
+          <ul>
+          <li><input type="text" name='number' placeholder="КП-01/2021-ЧП"></li>
+          <li><input type="text" name='odj_name' placeholder="СПБ ГБУЗ..."></li>
+          <li><input type="text" name='sqr'></li>
+          <li><input type="text" name="perim"></li>
+          <li><input type="text" name="height"></li>
+          </ul></div>
+        </div>
+        <div class="start_window_buttons"><button id="saveBtn">Запомнить</button>
+          <button id="editBtn">Изменить</button></div>
+      </div>
       
 <div class="exist">
   <p style="text-align: center;">Шаг 1 - Выбор позиций  для коммерческого предложения</p>
@@ -30,11 +66,21 @@
      <div class='result_grid_position'>ID</div>
      <div class='result_grid_position'>ТИП</div>
      <div class='result_grid_position'>ОПИСАНИЕ</div>
-     <div class='result_grid_position'>КОЭФФ</div>
-     <div class='result_grid_position'>СЕБ-МОСТЬ</div>
+     <div class='result_grid_position'>Стоим Ед-цы</div>
+     <div class='result_grid_position'>Количество</div>
+     <div class='result_grid_position'>Цена объема</div>
 </div>
 <div class="result_grid_body"></div>
-<div class="button_line"></div>
-   </div>
+<div class="button_line"><button style="width: 150px;">Просуммировать</button></div>
+<div class="total_result"><p>Итоговая сумма по позициям:</p></div>
+</div>
+<div class="bottom">
+  <div class="contact_inf"></div>
+  <div class="bottom_line">
+    <div style="padding-left: 10px;"> <img src="./img/logo_small.png" alt=""> группа компаний "СтройРеанимация" 2000-2021</div>
+    <div style="padding-right: 10px;">Создание калькулятора для сайта TWILZZ</div>
+  </div>
+</div>
+</div>
   </body>
 </html>

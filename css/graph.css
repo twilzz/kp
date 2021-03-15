@@ -1,0 +1,75 @@
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.phone{
+    font-size: xxx-large;
+}
+.contact{
+    background-color: #0060af;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.contact_top{
+    text-decoration: underline;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+}
+.contact_top a{
+    text-decoration: underline;
+    color: white;
+}
+.contact_bottom{
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    color: white;
+    padding: 5px;
+}
+.button_container{
+    width: 100%;
+    height: 70px;
+    background-color: #8fa2bc;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.button_container button{
+    background-color: #8fa2bc;
+    color: white;
+    border: none;
+}
+.button_container button:hover{
+    background-color: #0060af;
+    border: none;
+    color: white;
+}
+.bottom{
+    width: 100%;
+    position: absolute;
+    bottom: -1px;
+}
+.bottom_line{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #8fa2bc;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+}
