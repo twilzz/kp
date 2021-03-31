@@ -41,6 +41,10 @@ showButton();
     popupWindow.append(newGridTop);
     getData();
   });
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Escape") {
+      generateWindow();
+    }});
   function generateWindow() {
     popupWindow.classList.toggle("popup__window_show");
     while (popupWindow.firstChild) {
