@@ -54,10 +54,11 @@
     border: none;
     color: white;
 }
-.bottom{
+.footer{
     width: 100%;
-    position: absolute;
+    position: fixed;
     bottom: -1px;
+
 }
 .bottom_line{
     width: 100%;
