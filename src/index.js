@@ -4,6 +4,7 @@ import collectRows from './modules/collectrows';
 import createCaculatingTable from './modules/createcaculatingtable';
 import createNewButton from './modules/createbutton';
 import html2pdf from 'html2pdf.js';
+import generateText from './modules/generatetext';
 // import jsPDF from 'jspdf';
 document.addEventListener("DOMContentLoaded", () => {
   //БЛОК ПОЗИЦИЙ ДЛЯ РАСЧЕТА И РАБОТЫ С БД
@@ -40,18 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
     postData(form);
   });
+
 //Входная кнопка для начала выбора позиций и расчета 
   buttonShow.addEventListener("click", () => {
     getDataTest(getTestDataHandler);
-    // let newGridTop = document.createElement("div");
-    // newGridTop.classList.add("result_grid_top_window");
-    // newGridTop.innerHTML = `<div class='result_grid_position'>ID</div>
-    //                         <div class='result_grid_position'>Тип</div>
-    //                         <div class='result_grid_position'>Описание позиции</div>
-    //                         <div class='result_grid_position'>СЕБЕСТ ед.</div>
-    //                       `;
-    // popupWindow.append(newGridTop);
-    // getData();
   });
   document.addEventListener("keydown", (e) => {
     if (e.code === "Escape") {
@@ -64,16 +57,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function postData(form) {
+    function postData(form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       let formData = new FormData(form);
       let postObject = Object.fromEntries(formData.entries());
-      axios.post("http://localhost:3000/products", postObject);
+      console.log(JSON.stringify(postObject));
+      let res = getBase();
+      console.log(res);
+      generateWindow();
+      // axios.put("https://api.jsonbin.io/v3/b/60acd4efb2b1d74df21d2454", {
+      //   "products": [ postObject]
+      // }, {
+      //   headers: 
+      //           { "Content-Type": "application/json",
+      //             "X-Master-Key": "$2b$10$45OT.WYgKBbFDtaPeXP0EOzc4/qU/A7Iv5ie9iTYzYD6ns.SzidtS"}
+      // }).then(data => console.log(data));
     });
   }
 
- 
+
+
 
 // БЛОК ВВОДА ОБЩ ДАННЫХ
 {
@@ -194,25 +198,57 @@ function rebuildListItems(data,ids) {
   createNewButton('Рассчитать сумму', 'sumCalc', resultDiv,calcSumHandler);
 }
 function prepare2Print() {
-  const elements = document.querySelectorAll('[data-print]');
-  elements.forEach(element => element.remove());
-  console.log(elements);
+  //Удаление элементов маркированных атрибутами.
+  const elements2hide = document.querySelectorAll('[data-print]');
+  elements2hide.forEach(element => element.remove());
+  //Преобразуем Инпуты в спаны (красивее при печати)
   const inputs = document.querySelectorAll('.exist input');
   inputs.forEach(input => {
     input.parentElement.innerHTML = `<span>${input.value}</span>`;
   });
+  //Добавляем Информационные блоки
+  const elements2show = document.querySelectorAll('[data-show]');
+  elements2show.forEach(element => element.style.display = 'block');
+  //Создаем текст описательной части КП
+  document.querySelector('.header').style.justifyContent = 'center';
+  document.querySelectorAll('.header div').forEach(item => {
+    if (item.classList.contains('credits') || item.classList.contains('creditsleft') || item.classList.contains('creditsright'))
+      {
+      item.style.display='flex';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+  document.querySelector('.credits').style.display='flex';
+  checkTable();
   createNewButton('Распечатать', 'printBtn', resultDiv,printDoc);
 }
+/*Функция проверяет содержимое таблицы выбранных материалов, выделяет их в
+массив уникальных позиций и вызывает на основании этих позиций функцию выводящую текст*/
+function checkTable() {
+  let typeArray =[];
+  const positionType = document.querySelectorAll('.result_rows');
+  positionType.forEach(pos => typeArray.push(pos.firstElementChild.innerText));
+  typeArray = [...new Set(typeArray)];
+  typeArray.forEach(item => {
+    const newDescr = generateText(item);
+    insertDescription(newDescr);
+  });
+}
+/*Принимает текст описания позиций и отправляет его в целевой блок*/
+function insertDescription(descriptionText) {
+  const liDescr = document.createElement('li');
+  liDescr.innerText = descriptionText;
+  document.querySelector('#descrList').append(liDescr);
+}
+
 function printDoc() {
   console.log(`Заглушка`);
-  const newPdfDoc = document.querySelector('.main');
+  const newPdfDoc = document.body;
   const printOptions = {
-    margin: 5,
-    jsPDF: {
-      orientation: 'p',
-      unit: 'mm',
-      format: 'a4',
-     }
+    margin: 1,
+    html2canvas: {},
+    pagebreak: { mode: 'avoid-all'},
   };
   html2pdf(newPdfDoc,printOptions);
 }

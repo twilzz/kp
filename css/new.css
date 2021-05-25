@@ -44,3 +44,34 @@
 .result_rows div{
     margin-top: px;
 }
+.prim{
+    display: none;
+    width: 90%;
+}
+.prim li{
+    list-style-type:decimal;
+}
+
+.pos_description{
+    width: 90%;
+}
+.credits{
+    display: none;
+    justify-content: center;
+    flex-direction: row;
+}
+.credits li{
+    list-style-type:none;
+}
+.creditsleft{
+    width: 50%;
+    text-align: center;
+    border: 1px solid black;
+    justify-content: center;
+}
+.creditsright{
+    width: 50%;
+    text-align: center;
+    border: 1px solid black;
+    justify-content: center;
+}
